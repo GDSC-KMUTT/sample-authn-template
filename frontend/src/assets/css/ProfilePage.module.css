@@ -1,0 +1,55 @@
+.container {
+	min-height: 100vh;
+	background-color: #fafafa;
+
+	display: grid;
+	grid-template-columns: 420px auto;
+	grid-template-areas: 'sidebar content';
+}
+
+.navbar {
+	position: fixed;
+	width: 420px;
+	height: 100vh;
+
+	background-color: white;
+	box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px,
+		rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
+
+	grid-area: sidebar;
+}
+
+.navbarContainer {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+
+	padding: 6rem 3rem;
+}
+
+.profileImage {
+	width: 200px;
+	border-radius: 50%;
+	background-color: #ffeac2;
+	margin-bottom: 48px;
+}
+
+.username {
+	margin: 0;
+	padding: 0;
+
+	color: #6eb79c;
+	font-size: 32px;
+	font-weight: 600;
+}
+
+.email {
+	color: #a0a0a0;
+	font-weight: 500;
+}
+
+.content {
+	grid-area: content;
+	text-align: center;
+	margin: auto;
+}
