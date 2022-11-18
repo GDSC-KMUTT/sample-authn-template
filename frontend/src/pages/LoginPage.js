@@ -21,7 +21,7 @@ const LoginPage = () => {
 
 		/** Login */
 		axios
-			.post('https://gdsc.sit.kmutt.ac.th/ev1/signin.json', data)
+			.post('http://localhost:8080/signin', data)
 			.then((res) => {
 				/** If login success */
 				if (res.data?.success) {

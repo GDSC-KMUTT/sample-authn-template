@@ -46,7 +46,7 @@ const LoginConfirmPage = () => {
 		e.preventDefault()
 		const otp = slots.map((slot) => slot.current.value).join('')
 		axios
-			.post('https://gdsc.sit.kmutt.ac.th/ev1/confirm-otp.json', {
+			.post('http://localhost:8080/confirm-otp', {
 				id,
 				otp,
 			})
@@ -63,12 +63,7 @@ const LoginConfirmPage = () => {
 						progress: undefined,
 						theme: 'light',
 					})
-					document.cookie = `token=${
-						res.data?.token
-					}; expires=${new Date(
-						new Date().getTime() + 1000 * 60 * 60 * 24 * 7
-					)}`
-
+					localStorage.setItem('token', res.data?.token)
 					navigate('/profile')
 				} else {
 					toast.error('Invalid OTP!', {

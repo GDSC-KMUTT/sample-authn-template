@@ -10,8 +10,11 @@ const ProfilePage = () => {
 
 	function getUser() {
 		axios
-			.get('https://gdsc.sit.kmutt.ac.th/ev1/get-user.json', {
-				withCredentials: true,
+			.get('http://localhost:8080/get-user', {
+				headers: {
+					'Content-Type': 'application/json',
+					Authorization: 'Bearer ' + localStorage.getItem('token'),
+				},
 			})
 			.then((res) => {
 				if (res.data?.success) {
