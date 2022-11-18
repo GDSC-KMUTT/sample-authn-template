@@ -25,7 +25,7 @@ func main() {
 	http.HandleFunc("/signup", func(w http.ResponseWriter, r *http.Request) {
 		// POST request
 		// Body {email, password}
-		// Response {success, image, secret}
+		// Response {success, image, secret, id}
 	})
 
 	http.HandleFunc("/confirm-signup", func(w http.ResponseWriter, r *http.Request) {
@@ -37,12 +37,12 @@ func main() {
 	http.HandleFunc("/signin", func(w http.ResponseWriter, r *http.Request) {
 		// POST request
 		// Body {email, password}
-		// Response {success}
+		// Response {success, id}
 	})
 
 	http.HandleFunc("/confirm-signin", func(w http.ResponseWriter, r *http.Request) {
 		// POST request
-		// Body {email, otp}
+		// Body {id, otp}
 		// Response {success, token}
 	})
 
