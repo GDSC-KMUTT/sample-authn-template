@@ -39,7 +39,7 @@ const RegisterPage = () => {
 
 		/** Register */
 		axios
-			.post('http://gdsc-int.sit.kmutt.ac.th/ev1/signup.json', data)
+			.post('http://localhost:8080/signup', data)
 			.then((res) => {
 				/** If register success */
 				if (res.data?.success) {
