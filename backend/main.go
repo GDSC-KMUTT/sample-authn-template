@@ -14,7 +14,6 @@ import (
 	"github.com/GDSC-KMUTT/totp-session/types"
 	"github.com/GDSC-KMUTT/totp-session/utils"
 	_ "github.com/go-sql-driver/mysql"
-	"github.com/golang-jwt/jwt"
 	"github.com/pquerna/otp/totp"
 	"golang.org/x/crypto/bcrypt"
 )
@@ -70,26 +69,7 @@ func main() {
 		}
 
 		// Create a new user
-		insert, err := db.Exec("INSERT INTO users (email, password, secret) VALUES (?, ?, ?)", body.Email, hashedPwd, secret)
-		if err != nil {
-			http.Error(w, err.Error(), http.StatusInternalServerError)
-			return
-		}
-		userId, err := insert.LastInsertId()
-		if err != nil {
-			http.Error(w, err.Error(), http.StatusInternalServerError)
-			return
-		}
-
-		// Create a new JWT claims
-		claims := jwt.MapClaims{
-			"id":  userId,
-			"exp": time.Now().Add(time.Hour * 72).Unix(),
-		}
-
-		// Create JWT token
-		token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
-		tokenString, err := token.SignedString([]byte(config.C.JWT_SECRET))
+		_, err = db.Exec("INSERT INTO users (email, password, secret) VALUES (?, ?, ?)", body.Email, hashedPwd, secret)
 		if err != nil {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
 			return
@@ -113,13 +93,13 @@ func main() {
 		}
 
 		// Create a response
-		response, _ = json.Marshal(map[string]any{"success": true, "token": tokenString, "image": base64string})
+		response, _ = json.Marshal(map[string]any{"success": true, "secret": secret, "image": base64string})
 		fmt.Fprint(w, response)
 	})
 	http.HandleFunc("/signin", func(w http.ResponseWriter, r *http.Request) {
 
 	})
-	http.HandleFunc("/list", func(w http.ResponseWriter, r *http.Request) {
+	http.HandleFunc("/otp", func(w http.ResponseWriter, r *http.Request) {
 
 	})
 
