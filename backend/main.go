@@ -93,14 +93,32 @@ func main() {
 		}
 
 		// Create a response
-		response, _ = json.Marshal(map[string]any{"success": true, "secret": secret, "image": base64string})
+		response, _ = json.Marshal(map[string]any{"success": true, "secret": secret, "image": base64string, "id": })
 		fmt.Fprint(w, response)
 	})
-	http.HandleFunc("/signin", func(w http.ResponseWriter, r *http.Request) {
+
+	http.HandleFunc("/confirm-signup", func(w http.ResponseWriter, r *http.Request) {
+		// POST request
+		// Body {id, otp}
+		// Response {success, token}
 
 	})
-	http.HandleFunc("/otp", func(w http.ResponseWriter, r *http.Request) {
 
+	http.HandleFunc("/signin", func(w http.ResponseWriter, r *http.Request) {
+		// POST request
+		// Body {email, password}
+		// Response {success}
+	})
+
+	http.HandleFunc("/confirm-signin", func(w http.ResponseWriter, r *http.Request) {
+		// POST request
+		// Body {email, otp}
+		// Response {success, token}
+	})
+
+	http.HandleFunc("/getUser", func(w http.ResponseWriter, r *http.Request) {
+		// GET request
+		// Response {success, email}
 	})
 
 	if err := s.ListenAndServe(); err != nil {
