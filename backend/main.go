@@ -48,6 +48,7 @@ func main() {
 
 	http.HandleFunc("/getUser", func(w http.ResponseWriter, r *http.Request) {
 		// GET request
+		// Header authorization "Bearer {token}"
 		// Response {success, email}
 	})
 
