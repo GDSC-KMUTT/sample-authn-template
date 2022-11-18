@@ -103,19 +103,13 @@ func main() {
 		fmt.Fprint(w, response)
 	})
 
-	http.HandleFunc("/confirm-signup", func(w http.ResponseWriter, r *http.Request) {
-		// POST request
-		// Body {id, otp}
-		// Response {success, token}
-	})
-
 	http.HandleFunc("/signin", func(w http.ResponseWriter, r *http.Request) {
 		// POST request
 		// Body {email, password}
 		// Response {success, id}
 	})
 
-	http.HandleFunc("/confirm-signin", func(w http.ResponseWriter, r *http.Request) {
+	http.HandleFunc("/confirm-otp", func(w http.ResponseWriter, r *http.Request) {
 		// POST request
 		// Body {id, otp}
 		// Response {success, token}
