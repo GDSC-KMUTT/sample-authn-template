@@ -95,5 +95,18 @@ body {
 }
 
 .slots input {
-	font-size: 72px;
+	font-size: 50px;
+	text-align: center;
+}
+
+.qrcode-container {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+
+.qrcode-container p {
+	text-align: center;
+	line-height: 2rem;
 }

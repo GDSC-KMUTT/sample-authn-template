@@ -3,18 +3,24 @@ import Button from '../components/Button'
 import Link from '../components/Link/Link'
 
 import StarCatcher from '../assets/img/StarCatcher.jpg'
-import { useLocation } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 import { useRef } from 'react'
+import axios from 'axios'
+import { ToastContainer, toast } from 'react-toastify'
 
 const LoginConfirmPage = () => {
+	const navigate = useNavigate()
 	const location = useLocation()
 	const email = location.state?.email
+	const id = location.state?.id
+
 	const s1 = useRef(null)
 	const s2 = useRef(null)
 	const s3 = useRef(null)
 	const s4 = useRef(null)
 	const s5 = useRef(null)
-	const slots = [s1, s2, s3, s4, s5]
+	const s6 = useRef(null)
+	const slots = [s1, s2, s3, s4, s5, s6]
 
 	function checkNumber(str) {
 		return /\d/.test(str)
@@ -36,13 +42,71 @@ const LoginConfirmPage = () => {
 		e.target.select()
 	}
 
+	function onSubmitCode(e) {
+		e.preventDefault()
+		const otp = slots.map((slot) => slot.current.value).join('')
+		axios
+			.post('https://gdsc.sit.kmutt.ac.th/ev1/confirm-otp.json', {
+				id,
+				otp,
+			})
+			.then((res) => {
+				if (res.data?.success) {
+					/** Navigate on success. */
+					toast('🦄 Signing in has been confirmed!', {
+						position: 'top-right',
+						autoClose: 5000,
+						hideProgressBar: false,
+						closeOnClick: true,
+						pauseOnHover: true,
+						draggable: true,
+						progress: undefined,
+						theme: 'light',
+					})
+					document.cookie = `token=${
+						res.data?.token
+					}; expires=${new Date(
+						new Date().getTime() + 1000 * 60 * 60 * 24 * 7
+					)}`
+
+					navigate('/profile')
+				} else {
+					toast.error('Invalid OTP!', {
+						position: 'top-right',
+						autoClose: 5000,
+						hideProgressBar: false,
+						closeOnClick: true,
+						pauseOnHover: true,
+						draggable: true,
+						progress: undefined,
+						theme: 'light',
+					})
+				}
+			})
+			.catch((err) => {
+				toast.error('Confirmation failed!', {
+					position: 'top-right',
+					autoClose: 5000,
+					hideProgressBar: false,
+					closeOnClick: true,
+					pauseOnHover: true,
+					draggable: true,
+					progress: undefined,
+					theme: 'light',
+				})
+			})
+	}
+
 	return (
 		<AuthLayout image={StarCatcher} pageTitle="Confirm Login">
 			<div className="box-center">
 				{email ? (
 					<>
 						<b>{email}</b>
-						<form className="form-container">
+						<form
+							className="form-container"
+							onSubmit={onSubmitCode}
+						>
 							<div className="slots">
 								<input
 									ref={s1}
@@ -74,6 +138,12 @@ const LoginConfirmPage = () => {
 									onInput={onSlotInput}
 									onClick={onSlotClicked}
 								/>
+								<input
+									ref={s6}
+									className="input"
+									onInput={onSlotInput}
+									onClick={onSlotClicked}
+								/>
 							</div>
 							<div className="action-btn-container">
 								<Link to="/login">back</Link>
@@ -92,6 +162,7 @@ const LoginConfirmPage = () => {
 					</>
 				)}
 			</div>
+			<ToastContainer />
 		</AuthLayout>
 	)
 }
