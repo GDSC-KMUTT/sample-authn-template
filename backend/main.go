@@ -121,7 +121,7 @@ func main() {
 		// Response {success, token}
 	})
 
-	http.HandleFunc("/getUser", func(w http.ResponseWriter, r *http.Request) {
+	http.HandleFunc("/get-user", func(w http.ResponseWriter, r *http.Request) {
 		// GET request
 		// Header authorization "Bearer {token}"
 		// Response {success, email}
