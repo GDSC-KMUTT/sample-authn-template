@@ -62,7 +62,6 @@ body {
 	-webkit-box-sizing: border-box;
 } */
 
-
 .input:-moz-placeholder,
 .input:-ms-input-placeholder,
 .input::-webkit-input-placeholder {
@@ -81,20 +80,20 @@ body {
 	margin-right: 32px;
 }
 
-.box-center{
+.box-center {
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
 }
 
-.slots{
+.slots {
 	margin-top: 1.5rem;
 	display: flex;
 	flex-direction: row;
 	gap: 12px;
 }
 
-.slots input{
+.slots input {
 	font-size: 72px;
 }

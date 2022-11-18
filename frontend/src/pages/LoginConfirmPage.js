@@ -38,12 +38,12 @@ const LoginConfirmPage = () => {
 
 	return (
 		<AuthLayout image={StarCatcher} pageTitle="Confirm Login">
-			<div class="box-center">
+			<div className="box-center">
 				{email ? (
 					<>
 						<b>{email}</b>
 						<form className="form-container">
-							<div class="slots">
+							<div className="slots">
 								<input
 									ref={s1}
 									className="input"
