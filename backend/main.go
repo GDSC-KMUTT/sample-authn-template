@@ -27,15 +27,28 @@ func main() {
 		// Body {email, password}
 		// Response {success, image, secret}
 	})
+
+	http.HandleFunc("/confirm-signup", func(w http.ResponseWriter, r *http.Request) {
+		// POST request
+		// Body {id, otp}
+		// Response {success, token}
+	})
+
 	http.HandleFunc("/signin", func(w http.ResponseWriter, r *http.Request) {
 		// POST request
 		// Body {email, password}
 		// Response {success}
 	})
-	http.HandleFunc("/otp", func(w http.ResponseWriter, r *http.Request) {
+
+	http.HandleFunc("/confirm-signin", func(w http.ResponseWriter, r *http.Request) {
 		// POST request
 		// Body {email, otp}
 		// Response {success, token}
+	})
+
+	http.HandleFunc("/getUser", func(w http.ResponseWriter, r *http.Request) {
+		// GET request
+		// Response {success, email}
 	})
 
 	if err := s.ListenAndServe(); err != nil {
