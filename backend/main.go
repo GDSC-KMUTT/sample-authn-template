@@ -23,15 +23,19 @@ func main() {
 	}
 
 	http.HandleFunc("/signup", func(w http.ResponseWriter, r *http.Request) {
-		// implement me!
+		// POST request
+		// Body {email, password}
+		// Response {success, image, secret}
 	})
-
 	http.HandleFunc("/signin", func(w http.ResponseWriter, r *http.Request) {
-		// implement me!
+		// POST request
+		// Body {email, password}
+		// Response {success}
 	})
-
-	http.HandleFunc("/list", func(w http.ResponseWriter, r *http.Request) {
-		// implement me!
+	http.HandleFunc("/otp", func(w http.ResponseWriter, r *http.Request) {
+		// POST request
+		// Body {email, otp}
+		// Response {success, token}
 	})
 
 	if err := s.ListenAndServe(); err != nil {
