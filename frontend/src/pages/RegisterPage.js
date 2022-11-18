@@ -5,11 +5,13 @@ import Onshore from '../assets/img/Onshore.jpg'
 import { useNavigate, useSearchParams } from 'react-router-dom'
 import axios from 'axios'
 import { ToastContainer, toast } from 'react-toastify'
+import { useState } from 'react'
 
 const RegisterPage = () => {
 	const navigate = useNavigate()
 	const [query] = useSearchParams()
-	const dialog = 'http://localhost:3000/login-confirm'
+
+	const [url, setUrl] = useState('')
 
 	function onContinue() {
 		navigate('/login')
@@ -53,7 +55,8 @@ const RegisterPage = () => {
 						progress: undefined,
 						theme: 'light',
 					})
-
+					console.log(res.data.secret)
+					setUrl(res.data?.secret)
 					/** Navigate to confirmation page. */
 					navigate('/register?verify=true', {
 						replace: true,
@@ -94,7 +97,9 @@ const RegisterPage = () => {
 				<div className="qrcode-container">
 					<img
 						className="qrcode"
-						src={`https://chart.googleapis.com/chart?cht=qr&chs=250x250&chl=${dialog}`}
+						src={`https://chart.googleapis.com/chart?cht=qr&chs=250x250&chl=${encodeURIComponent(
+							url
+						)}`}
 						alt="profile-img"
 					/>
 					<p>
