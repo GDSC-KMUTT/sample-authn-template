@@ -4,22 +4,67 @@ import Link from '../components/Link/Link'
 
 import StarCatcher from '../assets/img/StarCatcher.jpg'
 import { useNavigate } from 'react-router-dom'
+import axios from 'axios'
+import { ToastContainer, toast } from 'react-toastify'
 
 const LoginPage = () => {
 	const navigate = useNavigate()
 
 	function onLoginSubmit(e) {
 		e.preventDefault()
+
+		/** Data */
 		const data = {
 			email: e.target.email.value,
 			password: e.target.password.value,
 		}
-		console.log('submit', data)
-		navigate('/login/confirm', {
-			state: {
-				email: data.email,
-			},
-		})
+
+		/** Login */
+		axios
+			.post('https://gdsc.sit.kmutt.ac.th/ev1/signin.json', data)
+			.then((res) => {
+				/** If login success */
+				if (res.data?.success) {
+					toast('🦄 Signed in success!', {
+						position: 'top-right',
+						autoClose: 5000,
+						hideProgressBar: false,
+						closeOnClick: true,
+						pauseOnHover: true,
+						draggable: true,
+						progress: undefined,
+						theme: 'light',
+					})
+
+					/** Navigate to confirmation page. */
+					navigate('/login/confirm', {
+						state: { email: data.email, id: res.data?.id },
+					})
+				} else {
+					toast.error('🦄 Signed in failed!', {
+						position: 'top-right',
+						autoClose: 5000,
+						hideProgressBar: false,
+						closeOnClick: true,
+						pauseOnHover: true,
+						draggable: true,
+						progress: undefined,
+						theme: 'light',
+					})
+				}
+			})
+			.catch((err) => {
+				toast.error('Signed in failed!', {
+					position: 'top-right',
+					autoClose: 5000,
+					hideProgressBar: false,
+					closeOnClick: true,
+					pauseOnHover: true,
+					draggable: true,
+					progress: undefined,
+					theme: 'light',
+				})
+			})
 	}
 
 	return (
@@ -45,6 +90,7 @@ const LoginPage = () => {
 					<Button type="submit">Login</Button>
 				</div>
 			</form>
+			<ToastContainer />
 		</AuthLayout>
 	)
 }
