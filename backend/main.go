@@ -69,7 +69,13 @@ func main() {
 		}
 
 		// Create a new user
-		_, err = db.Exec("INSERT INTO users (email, password, secret) VALUES (?, ?, ?)", body.Email, hashedPwd, secret)
+		insert, err := db.Exec("INSERT INTO users (email, password, secret) VALUES (?, ?, ?)", body.Email, hashedPwd, secret)
+		if err != nil {
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+			return
+		}
+
+		insertedID, err := insert.LastInsertId()
 		if err != nil {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
 			return
@@ -93,7 +99,7 @@ func main() {
 		}
 
 		// Create a response
-		response, _ = json.Marshal(map[string]any{"success": true, "secret": secret, "image": base64string, "id": })
+		response, _ = json.Marshal(map[string]any{"success": true, "secret": secret, "image": base64string, "id": insertedID})
 		fmt.Fprint(w, response)
 	})
 
@@ -101,23 +107,23 @@ func main() {
 		// POST request
 		// Body {id, otp}
 		// Response {success, token}
-
 	})
 
 	http.HandleFunc("/signin", func(w http.ResponseWriter, r *http.Request) {
 		// POST request
 		// Body {email, password}
-		// Response {success}
+		// Response {success, id}
 	})
 
 	http.HandleFunc("/confirm-signin", func(w http.ResponseWriter, r *http.Request) {
 		// POST request
-		// Body {email, otp}
+		// Body {id, otp}
 		// Response {success, token}
 	})
 
 	http.HandleFunc("/getUser", func(w http.ResponseWriter, r *http.Request) {
 		// GET request
+		// Header authorization "Bearer {token}"
 		// Response {success, email}
 	})
 
