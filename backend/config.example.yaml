@@ -1,0 +1,4 @@
+address: :8080
+jwt_secret: 7GRPpVk04We76CWR
+personal_mysql_dsn: dsce221221000:1234@tcp(gdsc-int.sit.kmutt.ac.th:13306)/dsce221221000?charset=utf8mb4&parseTime=True&loc=Local
+demo_store_mysql_dsn: dsce221221000:1234@tcp(gdsc-int.sit.kmutt.ac.th:13306)/demo_store?charset=utf8mb4&parseTime=True&loc=Local
