@@ -1,6 +1,7 @@
-package types
+package payload
 
-type SignIn struct {
+type NewUser struct {
+	Name     string `json:"name"`
 	Email    string `json:"email"`
 	Password string `json:"password"`
 }

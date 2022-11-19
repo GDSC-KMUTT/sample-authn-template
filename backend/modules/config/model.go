@@ -1,15 +1,15 @@
 package config
 
 import (
-	"io/ioutil"
+	"os"
 
 	"gopkg.in/yaml.v2"
 )
 
-var C = new(config)
+var C = new(Model)
 
-func init() {
-	yml, err := ioutil.ReadFile("config.yaml")
+func Init() {
+	yml, err := os.ReadFile("config.yaml")
 	if err != nil {
 		panic(err)
 	}
